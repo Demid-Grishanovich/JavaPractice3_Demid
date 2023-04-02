@@ -14,7 +14,7 @@ public class Runner {
         Purchase[] purchases = new Purchase[PURCHASES_NUMBER];
 
         for (int i = 0; i < PURCHASES_NUMBER; i++) {
-            String productName = scanner.nextLine();
+            String productName = scanner.next();
             double price = scanner.nextDouble();
             int numberOfPurchasedUnits = scanner.nextInt();
             int discountPercent = scanner.nextInt();
