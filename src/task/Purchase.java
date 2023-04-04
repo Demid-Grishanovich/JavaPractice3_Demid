@@ -1,7 +1,7 @@
 package task;
 
 public class Purchase implements Comparable<Purchase> {
-        public final static String NAME = "Iphone";
+        public final static String NAME = "Android";
    public final static int PRICE = 70099;
     private int numberOfPurchasedUnits;
     private double discountPercent;
@@ -62,7 +62,7 @@ public class Purchase implements Comparable<Purchase> {
 
     @Override
     public String toString() {
-        return numberOfPurchasedUnits + " " + discountPercent + " " + weekDay + " " + convertToEuro((int) getCost());
+        return String.format("%d; %.2f; %s %s", numberOfPurchasedUnits ,discountPercent , weekDay , ConversionToEuro.conversionToEuro( getCost()));
     }
 
     public String convertToEuro(int value) {
