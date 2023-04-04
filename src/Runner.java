@@ -1,5 +1,5 @@
-import task.Purchase;
-import task.WeekDay;
+import task.*;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -34,23 +34,19 @@ public class Runner {
         for (int i = 0; i < purchases.length; i++) {
             String[] fileData = scanner.nextLine().split(" ");
             int number = Integer.parseInt(fileData[0]);
-            int discount = Integer.parseInt(fileData[1]);
+            double discount = Double.parseDouble(fileData[1]);
             WeekDay day = WeekDay.values()[Integer.parseInt(fileData[2])];
-            Purchase purchaseTemp = new Purchase(number, discount, day);
-            purchases[i] = purchaseTemp;;
+            purchases[i] = new Purchase(number, discount, day);
         }
         scanner.close();
 
 
         // Output the array
-        System.out.println(Purchase.NAME + " " +Purchase.PRICE );
-        for (Purchase purchase : purchases) {
-            System.out.println(purchase);
-        }
+        printArray(purchases);
         int averageCost = 0;
         int totalCost = 0;
         WeekDay weekDay = null;
-        int currentDiscount = 100;
+        double currentDiscount = 100;
         for (Purchase purchase : purchases) {
             int cost = purchase.getCost();
             averageCost += cost;

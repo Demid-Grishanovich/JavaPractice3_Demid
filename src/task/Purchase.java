@@ -4,7 +4,7 @@ public class Purchase implements Comparable<Purchase> {
         public final static String NAME = "Iphone";
    public final static int PRICE = 70099;
     private int numberOfPurchasedUnits;
-    private int discountPercent;
+    private double discountPercent;
     private WeekDay weekDay;
 
 
@@ -12,11 +12,13 @@ public class Purchase implements Comparable<Purchase> {
     public Purchase() {
     }
 
-    public Purchase(int numberOfPurchasedUnits, int discountPercent, WeekDay weekDay) {
-      ;
+    public Purchase(int numberOfPurchasedUnits, double discountPercent, WeekDay weekDay) {
         this.numberOfPurchasedUnits = numberOfPurchasedUnits;
         this.discountPercent = discountPercent;
         this.weekDay = weekDay;
+    }
+    public Purchase(int numberOfPurchasedUnits, double discountPercent, int  weekDay) {
+        this(numberOfPurchasedUnits,discountPercent, WeekDay.values()[weekDay]);
     }
 
     public String getNAME() {
@@ -34,7 +36,7 @@ public class Purchase implements Comparable<Purchase> {
         this.numberOfPurchasedUnits = numberOfPurchasedUnits;
     }
 
-    public int getDiscountPercent() {
+    public double getDiscountPercent() {
         return discountPercent;
     }
 
@@ -64,7 +66,7 @@ public class Purchase implements Comparable<Purchase> {
     }
 
     public String convertToEuro(int value) {
-        return String.format("%d.%d", value / 100, value % 100);
+        return String.format("%d.%02d", value / 100, value % 100);
     }
     @Override
     public int compareTo(Purchase purchase){
