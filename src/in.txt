@@ -1,11 +1,11 @@
 10
-Laptop 100.00 2 10 2
-Monitor 250.50 4 5 1
-Keyboard 50.00 10 15 5
-Mouse 20.00 5 0 0
-Headphones 80.00 3 20 6
-Speakers 120.00 6 10 3
-Webcam 65.00 8 5 2
-Microphone 40.00 7 10 4
-Charger 35.00 5 0 1
-Cables 10.00 15 5 3
+10 20 0
+1 0 2
+5 44 5
+8 18 3
+7 90 6
+11 24 1
+2 3 2
+100 88 4
+8 1 1
+9 70 2

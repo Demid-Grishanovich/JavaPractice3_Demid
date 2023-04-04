@@ -1,47 +1,35 @@
 package task;
 
 public class Purchase implements Comparable<Purchase> {
-    private String productName;
-    private double price;
+        public final static String NAME = "Iphone";
+   public final static int PRICE = 70099;
     private int numberOfPurchasedUnits;
     private int discountPercent;
     private WeekDay weekDay;
 
-    public enum WeekDay {
-        SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
-    }
+
 
     public Purchase() {
     }
 
-    public Purchase(String productName, double price, int numberOfPurchasedUnits, int discountPercent, WeekDay weekDay) {
-        this.productName = productName;
-        this.price = price;
+    public Purchase(int numberOfPurchasedUnits, int discountPercent, WeekDay weekDay) {
+      ;
         this.numberOfPurchasedUnits = numberOfPurchasedUnits;
         this.discountPercent = discountPercent;
         this.weekDay = weekDay;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getNAME() {
+        return NAME;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public int getPRICE() {
+        return PRICE;
     }
 
     public int getNumberOfPurchasedUnits() {
         return numberOfPurchasedUnits;
     }
-
     public void setNumberOfPurchasedUnits(int numberOfPurchasedUnits) {
         this.numberOfPurchasedUnits = numberOfPurchasedUnits;
     }
@@ -63,17 +51,23 @@ public class Purchase implements Comparable<Purchase> {
         this.weekDay = weekDay;
     }
 
-    public double getCost() {
-        return Math.round(price * numberOfPurchasedUnits * (100 - discountPercent) / 100.0);
+    public int getCost() {
+        double cost = PRICE * numberOfPurchasedUnits * (100 - discountPercent) / 100;
+        cost =  Math.round(cost/100);
+        return (int) cost*100;
+
     }
 
     @Override
     public String toString() {
-        return productName + ";" + price + ";" + numberOfPurchasedUnits + ";" + discountPercent + ";" + weekDay + ";" + getCost();
+        return numberOfPurchasedUnits + " " + discountPercent + " " + weekDay + " " + convertToEuro((int) getCost());
     }
 
+    public String convertToEuro(int value) {
+        return String.format("%d.%d", value / 100, value % 100);
+    }
     @Override
-    public int compareTo(Purchase purchase) {
-        return Integer.compare(this.numberOfPurchasedUnits, purchase.numberOfPurchasedUnits);
+    public int compareTo(Purchase purchase){
+        return numberOfPurchasedUnits - purchase.numberOfPurchasedUnits;
     }
 }

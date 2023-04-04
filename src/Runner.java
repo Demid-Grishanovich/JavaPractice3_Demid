@@ -1,75 +1,86 @@
 import task.Purchase;
-import task.Purchase.WeekDay;
+import task.WeekDay;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Locale;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
 
 public class Runner {
-    public static void main(String[] args) throws IOException {
+    public Runner() {
+    }
+    public static void main(String[] args)  {
         File file = new File("src/in.txt");
-        Scanner scanner = new Scanner(file);
-        int PURCHASES_NUMBER = scanner.nextInt();
+        Scanner scanner;
+        try {
+            scanner = new Scanner(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return;
+        }
+        scanner.useLocale(Locale.ENGLISH);
+
+        final int PURCHASES_NUMBER = scanner.nextInt();
+        if (PURCHASES_NUMBER == 0) {
+            System.out.println("Purchases count is zero.");
+            return;
+        }
         Purchase[] purchases = new Purchase[PURCHASES_NUMBER];
+        scanner.nextLine();
 
-        for (int i = 0; i < PURCHASES_NUMBER; i++) {
-            String productName = scanner.next();
-            double price = scanner.nextDouble();
-            int numberOfPurchasedUnits = scanner.nextInt();
-            int discountPercent = scanner.nextInt();
-            int weekDay = scanner.nextInt();
-            purchases[i] = new Purchase(productName, price, numberOfPurchasedUnits, discountPercent, WeekDay.values()[weekDay]);
+        for (int i = 0; i < purchases.length; i++) {
+            String[] fileData = scanner.nextLine().split(" ");
+            int number = Integer.parseInt(fileData[0]);
+            int discount = Integer.parseInt(fileData[1]);
+            WeekDay day = WeekDay.values()[Integer.parseInt(fileData[2])];
+            Purchase purchaseTemp = new Purchase(number, discount, day);
+            purchases[i] = purchaseTemp;;
         }
+        scanner.close();
 
-        // Output the array content
+
+        // Output the array
+        System.out.println(Purchase.NAME + " " +Purchase.PRICE );
         for (Purchase purchase : purchases) {
             System.out.println(purchase);
         }
-
-        // Calculate the average cost, total cost on Monday, and day with the maximum purchase cost
-        double totalCost = 0;
-        double mondayTotalCost = 0;
-        double maxPurchaseCost = 0;
-        WeekDay dayWithMaxPurchaseCost = null;
-
+        int averageCost = 0;
+        int totalCost = 0;
+        WeekDay weekDay = null;
+        int currentDiscount = 100;
         for (Purchase purchase : purchases) {
-            double cost = purchase.getCost();
-            totalCost += cost;
-
-            if (purchase.getWeekDay() == WeekDay.MONDAY) {
-                mondayTotalCost += cost;
+            int cost = purchase.getCost();
+            averageCost += cost;
+            if (purchase.getWeekDay() == WeekDay.Monday){
+                totalCost += cost;
             }
-
-            if (cost > maxPurchaseCost) {
-                maxPurchaseCost = cost;
-                dayWithMaxPurchaseCost = purchase.getWeekDay();
+            if (purchase.getDiscountPercent() < currentDiscount){
+                currentDiscount = purchase.getDiscountPercent();
+                weekDay = purchase.getWeekDay();
             }
         }
-
-        double averageCost = totalCost / PURCHASES_NUMBER;
-        System.out.printf("Average cost: %.3f%n", averageCost);
-        System.out.printf("Total cost on Monday: %.3f%n", mondayTotalCost);
-        System.out.printf("Day with the maximum purchase cost: %s%n", dayWithMaxPurchaseCost);
-
-        // Sort the array by the number of purchased units
+        System.out.printf("The average cost of all purchases:%.3f\n", (averageCost / (double)purchases.length) / 100);
+        System.out.printf("The total cost of all purchases on Monday:%d.%d", totalCost/100, totalCost%100);
+        System.out.println();
+        System.out.println("The day with maximum purchase cost:" + weekDay);
         Arrays.sort(purchases);
-
-        // Output the sorted array content
-        for (Purchase purchase : purchases) {
-            System.out.println(purchase);
+        printArray(purchases);
+        int[] numbers = new int[PURCHASES_NUMBER];
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = purchases[i].getNumberOfPurchasedUnits();
         }
-
-        // Find a purchase with number equalled to 5
-        Purchase key = new Purchase();
-        key.setNumberOfPurchasedUnits(5);
-        int index = Arrays.binarySearch(purchases, key);
-
-        if (index >= 0) {
-            System.out.println("Purchase with number equalled to 5: " + purchases[index]);
-
-        } else {
-            System.out.println("No purchase with number equalled to 5 found.");
+        System.out.println("purchase with number equalled to 5:" + purchases[Arrays.binarySearch(numbers, 5)]);
+    }
+    public static void printArray(Purchase[] purchases) {
+        Purchase purchase1 = new Purchase();
+        System.out.println(purchase1.getNAME() + " " + purchase1.getPRICE());
+        for (Purchase purchase : purchases) {
+            if (purchase != null) {
+                System.out.println(purchase);
+            }
         }
     }
 }
