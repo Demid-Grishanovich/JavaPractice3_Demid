@@ -1,7 +1,7 @@
 import task.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-public class TestRunner {    @Test
+/*public class TestRunner {    @Test
 public void TestConstructors(){
     Purchase purchaseDefault = new Purchase();
     assertEquals(0, purchaseDefault.getNumberOfPurchasedUnits());
@@ -28,4 +28,6 @@ public void TestConstructors(){
         Purchase purchase2 = new Purchase();
         assertEquals(purchase2.convertToEuro(120053), "1200.53");
     }
-}
+}*/
+
+

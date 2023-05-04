@@ -1,13 +1,13 @@
 package task;
 
 public enum WeekDay {
-    Sunday(0),
-    Monday(1),
-    Tuesday(2),
-    Wednesday(3),
-    Thursday(4),
-    Friday(5),
-    Saturday(6);
+    SUNDAY(0),
+    MONDAY(1),
+    TUESDAY(2),
+    WEDNESDAY(3),
+    THURSDAY(4),
+    FRIDAY(5),
+    SATURDAY(6);
 
     private int value;
 
