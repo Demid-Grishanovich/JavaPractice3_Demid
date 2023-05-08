@@ -1,33 +1,92 @@
-import org.junit.Test;
-import static org.junit.Assert.*;
-import task.Purchase;
-import task.Purchase.WeekDay;
+import task.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class TestRunner {
     @Test
-    public void testConstructors() {
-        Purchase purchase1 = new Purchase();
-        assertNotNull(purchase1);
+    public void TestConstructorsVoid() {
+        Purchase purchaseDefault = new Purchase();
+        assertEquals(0, purchaseDefault.getNumberOfPurchasedUnits());
+        assertEquals(0, purchaseDefault.getDiscountPercent());
+        assertNull(purchaseDefault.getWeekDay());
 
-        Purchase purchase2 = new Purchase("Laptop", 1000.00, 2, 10, WeekDay.TUESDAY);
-        assertNotNull(purchase2);
-        assertEquals("Laptop", purchase2.getProductName());
-        assertEquals(1000.00, purchase2.getPrice(), 0.01);
-        assertEquals(2, purchase2.getNumberOfPurchasedUnits());
-        assertEquals(10, purchase2.getDiscountPercent());
-        assertEquals(WeekDay.TUESDAY, purchase2.getWeekDay());
+    }
+
+
+    @Test
+    public void TestConstructors() {
+        Purchase purchase = new Purchase(15, 30, WeekDay.MONDAY);
+        assertEquals("Android", Purchase.NAME);
+        assertEquals(70099, Purchase.PRICE);
+        assertEquals(15, purchase.getNumberOfPurchasedUnits());
+        assertEquals(30, purchase.getDiscountPercent());
+        assertEquals(WeekDay.MONDAY, purchase.getWeekDay());
     }
 
     @Test
-    public void testGetCost() {
-        Purchase purchase = new Purchase("Laptop", 1000.00, 2, 10, WeekDay.TUESDAY);
-        assertEquals(1800.00, purchase.getCost(), 0.01);
+    public void TestConstructorsWithIntDay() {
+        Purchase purchase1 = new Purchase(15, 30, 1);
+        assertEquals("Android", Purchase.NAME);
+        assertEquals(70099, Purchase.PRICE);
+        assertEquals(15, purchase1.getNumberOfPurchasedUnits());
+        assertEquals(30, purchase1.getDiscountPercent());
+        assertEquals(WeekDay.MONDAY, purchase1.getWeekDay());
+    }
+
+
+    @Test
+    public void testFirstGetCost() {
+        Purchase purchase1 = new Purchase(6, 20, WeekDay.TUESDAY);
+        assertEquals(336500, purchase1.getCost());
     }
 
     @Test
-    public void testToString() {
-        Purchase purchase = new Purchase("Laptop", 1000.00, 2, 10, WeekDay.TUESDAY);
-        String expected = "Laptop;1000.0;2;10;TUESDAY;1800.0";
-        assertEquals(expected, purchase.toString());
+    public void testSecondGetCost() {
+        Purchase purchase2 = new Purchase(10, 15.5, 1);
+        assertEquals(592300, purchase2.getCost());
+    }
+
+    @Test
+    public void testThirdGetCost() {
+        Purchase purchase3 = new Purchase(3, 20, WeekDay.SUNDAY);
+        assertEquals(168200, purchase3.getCost());
+    }
+
+    @Test
+    public void testFourthGetCost() {
+        Purchase purchase4 = new Purchase(3, 10, 3);
+        assertEquals(189300, purchase4.getCost());
+    }
+
+    @Test
+    public void testConversionToEuro1() {
+        assertEquals(ConversionToEuro.conversionToEuro(120053), "1200.53");
+    }
+    @Test
+    public void testConversionToEuro2() {
+        assertEquals(ConversionToEuro.conversionToEuro(350), "3.50");
+    }
+    @Test
+    public void testConversionToEuro3() {
+        assertEquals(ConversionToEuro.conversionToEuro(305), "3.05");
+
+    }
+    @Test
+    public void testConversionToEuro4() {
+        assertEquals(ConversionToEuro.conversionToEuro(300), "3.00");
+    }
+    @Test
+    public void testConversionToEuro5() {
+        assertEquals(ConversionToEuro.conversionToEuro(5), "0.05");
+    }
+    @Test
+    public void testConversionToEuro6() {
+        assertEquals(ConversionToEuro.conversionToEuro(0), "0.00");
+    }
+    @Test
+    public void testConversionToEuro7() {
+        assertEquals(ConversionToEuro.conversionToEuro(100500), "1005.00");
     }
 }
+
